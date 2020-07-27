@@ -1,0 +1,169 @@
+ProfileLink
+
+// MARK: - ProfileCard
+struct ProfileCard: Codable {
+    let avatar: AttachmentInfo
+    let data: ProfileData
+    let type: String
+}
+
+// MARK: - AttachmentInfo
+struct AttachmentInfo: Codable {
+    let id: String
+    let url: String
+    let order, timestamp: Int
+}
+
+// MARK: - ProfileData
+struct ProfileData: Codable {
+    let id, handle, type: String
+    let metadata: ProfileMetadata
+    let status: Int
+}
+
+// MARK: - ProfileMetadata
+struct ProfileMetadata: Codable {
+    let name: String?
+    let verified: Int
+    let location: String?
+    let privateLikes: Int
+}
+
+Sample JSON Implementation
+{
+  "avatar": {
+      "id": "1231231-124124",
+      "url": "https://images.unsplash.com/photo-1557977244-eca5bdc03355",
+      "order": 0,
+      "timestamp": 1923012313
+  },
+  "data": {
+      "id": "123123-12414",
+      "handle": "sroyce",
+      "type": "NORMAL",
+      "metadata": {
+          "name": "Samuel",
+          "verified": 0,
+          "location": "Boston",
+          "privateLikes": 0
+      },
+      "status": 0
+  },
+  "type": "PROFILE_CARD"
+}
+
+ClipIF
+{
+    "profile": {
+        "avatar": {
+            "id": "1231231-124124",
+            "url": "https://images.unsplash.com/photo-1557977244-eca5bdc03355",
+            "order": 0,
+            "timestamp": 1923012313
+        },
+        "data": {
+            "id": "123123-12414",
+            "handle": "sroyce",
+            "type": "NORMAL",
+            "metadata": {
+                "name": "Samuel",
+                "verified": 0,
+                "location": "Boston",
+                "privateLikes": 0
+            },
+            "status": 0
+        },
+        "type": "PROFILE_CARD"
+    },
+    "data": {
+        "id": "129123-124124",
+        "type": "POST",
+        "profileId": "9123-123-12",
+        "streamId": "10231-12-312",
+        "metadata": {
+            "name": "Nike Air",
+            "price": {
+                "amount": "22.00",
+                "type": "USD"
+            }
+        },
+        "status": 0
+    },
+    "attachments": [
+        {
+            "id": "1231231-124124",
+            "url": "https://images.unsplash.com/photo-1557977244-eca5bdc03355",
+            "order": 0,
+            "timestamp": 1923012313
+        },
+        {
+            "id": "1231231-124124",
+            "url": "https://images.unsplash.com/photo-1557977244-eca5bdc03355",
+            "order": 0,
+            "timestamp": 1923012313
+        }
+    ],
+    "getLikes": 0,
+    "getFollowers": 0,
+    “type”: “ENTITY_CLIP”
+}
+
+struct EntityClip: Codable {
+    let profile: ProfileCard
+    let data: Entity
+    let attachments: [AttachmentInfo]
+    let getLikes, getFollowers: Int
+    let type: String
+}
+
+// MARK: - Entity
+struct Entity: Codable {
+    let id, type, profileID, streamID: String
+    let metadata: ProductMetadata /* This can be ProductMetadata, LookbookMetadata, or PostMetadata */
+    let status: Int
+
+    enum CodingKeys: String, CodingKey {
+        case id, type
+        case profileID = "profileId"
+        case streamID = "streamId"
+        case metadata, status
+    }
+}
+
+///////// These Metadata re all under the same Entity umbrella type /////////
+
+// MARK: - ProductMetadata
+struct ProductMetadata: Codable {
+    let name: String
+    let price: Price
+}
+
+// MARK: - LookbookMetadata
+struct LookbookMetadata: Codable {
+    let name: String
+    let description: Price
+}
+
+// MARK: - PostMetadata
+struct LookbookMetadata: Codable {
+    let content: String
+}
+
+// MARK: - Price
+struct Price: Codable {
+    let amount, type: String
+}
+
+struct LookBookPage {
+    let id: String
+    let clip: EntityClip
+    let collection: [EntityClip]
+    let type: String   
+}
+
+struct PostPageView {
+    let clip: EntityClipView
+    let profileTags: [ProfileCard]
+    let entityTags: [EntityClipView]
+    let type: String 
+}
