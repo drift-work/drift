@@ -60,7 +60,7 @@ struct EntityClip: Codable {
     let profile: ProfileCard
     let data: Entity
     let attachments: [AttachmentInfo]
-    let getLikes, getFollowers: Int
+    let likes, followers: Int
     let type: String
 }
 
@@ -173,5 +173,12 @@ struct PostPageView {
     let clip: EntityClipView
     let profileTags: [ProfileCard]
     let entityTags: [EntityClipView]
+    let comments: [Comment]
     let type: String 
+}
+
+struct Comment {
+   let id, content: String
+   let likes: Int
+   let profile: ProfileCard
 }
