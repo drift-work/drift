@@ -53,6 +53,14 @@ Sample JSON Implementation
   "type": "PROFILE_CARD"
 }
 
+ProfileClipView
+Endpoint: GET drift.readonly.api/drift/profileclip?id={id}
+//MARK: - ProfileClipView
+struct ProfileClip: Codable {
+    let profile: ProfileCard
+    let likes, followers, totalLikes: int
+}
+
 ClipIF
 Endpoint: GET drift.readonly.api/drift/clip?id={id}
 
